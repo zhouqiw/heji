@@ -1,0 +1,11 @@
+使用的命令
+sudo python setup.py install
+
+修改之后，由于忽略了 初始化函数的修改导致 python中不能import模块
+initfunmod(void)
+{
+    (void) Py_InitModule("funmod", FibMethods);
+}
+
+
+ 

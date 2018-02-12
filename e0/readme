@@ -1,0 +1,5 @@
+Python调用C++(类)动态链接库 
+       需要extern "C"来辅助，也就是说还是只能调用C函数，不能直接调用方法，但是能解析C++方法。不是用extern "C"，构建后的动态链接库没有这些函数的符号表。
+（1）C++类文件：pycallclass.cpp
+（2）g++编译生成动态库libpycall.so：g++ -o libpycallclass.so -shared -fPIC pycallclass.cpp。
+（3）Python调用动态库的文件：pycallclass.py

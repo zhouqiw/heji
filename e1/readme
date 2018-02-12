@@ -1,0 +1,4 @@
+Python调用C/C++可执行程序
+（1）C/C++程序：main.cpp
+（2）编译成二进制可执行文件：g++ -o testmain main.cpp。
+（3）Python调用程序：main.py

@@ -1,0 +1,48 @@
+. python 调用 c++ (ctypes)
+ctypes is an advanced ffi (Foreign Function Interface) package for Python 2.3 and higher. In Python 2.5 it is already included.
+ctypes allows to call functions in dlls/shared libraries and has extensive facilities to create, access and manipulate simple and complicated C data types in Python - in other words: wrap libraries in pure Python. It is even possible to implement C callback functions in pure Python.
+http://python.NET/crew/theller/ctypes/
+ 
+#include <Python.h>
+
+class TestFact{
+    public:
+    TestFact(){};
+    ~TestFact(){};
+    int fact(int n);
+};
+
+int TestFact::fact(int n)
+{
+  if (n <= 1)
+    return 1;
+  else
+    return n * (n - 1);
+}
+
+extern "C"
+int fact(int n)
+{
+    TestFact t;
+    return t.fact(n);
+}
+将代码存为wrapper.cpp不用写python接口封装, 直接编译成so库,
+g++ -fPIC wrapper.cpp -o example.so -shared -I/usr/include/python2.6 -I/usr/lib/python2.6/config
+ 
+进入python, 可以如下使用
+>>> import ctypes
+>>> pdll = ctypes.CDLL('/home/ubuntu/tmp/example.so')
+>>> pdll.fact(4)
+12
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+####################################################
+99-1-186-6:ctypes zhouqi$ g++ -fPIC pycallclass.cpp -o libpycallclass.so  -shared -I/usr/include/python2.7 -I/usr/lib/python2.7/config
+99-1-186-6:ctypes zhouqi$ python pycallclass.py 
+display()
+First display
+hello world!
+display(100)
+Second display:2
+99-1-186-6:ctypes zhouqi$ g++ -fPIC pycallclass.cpp -o libpycallclass.so  -shared -I/usr/include/python2.7 -I/usr/lib/python2.7/config
